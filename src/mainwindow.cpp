@@ -6,6 +6,7 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent), ui(new Ui::MainWi
   ui->setupUi(this);
   QIcon icon(":/image/images/icon.png");
   setWindowIcon(icon);
+<<<<<<< HEAD
 
   // UI 설정 부분
   QString lineEdit_title_style = "QLineEdit {"
@@ -49,11 +50,14 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent), ui(new Ui::MainWi
   timer = new QTimer(this);
   connect(timer, &QTimer::timeout, this, &MainWindow::updateGraph);
   timer->start(100);
+=======
+>>>>>>> 389d2f9 (first commit)
 }
 
 MainWindow::~MainWindow()
 {
   delete ui;
+<<<<<<< HEAD
   if (hdwf != hdwfNone) {
     FDwfDeviceClose(hdwf);  // 장치 닫기
   }
@@ -104,4 +108,6 @@ void MainWindow::updateGraph()
     customPlot->xAxis->setRange(0, time.last());
     customPlot->yAxis->setRange(-1, 1);  // ±1V 범위
     customPlot->replot();
+=======
+>>>>>>> 389d2f9 (first commit)
 }

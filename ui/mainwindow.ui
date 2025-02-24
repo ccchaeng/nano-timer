@@ -6,8 +6,13 @@
    <rect>
     <x>0</x>
     <y>0</y>
+<<<<<<< HEAD
     <width>1050</width>
     <height>700</height>
+=======
+    <width>1010</width>
+    <height>730</height>
+>>>>>>> 389d2f9 (first commit)
    </rect>
   </property>
   <property name="windowTitle">
@@ -22,10 +27,17 @@
    <widget class="QFrame" name="GraphFrame">
     <property name="geometry">
      <rect>
+<<<<<<< HEAD
       <x>10</x>
       <y>20</y>
       <width>911</width>
       <height>651</height>
+=======
+      <x>20</x>
+      <y>20</y>
+      <width>971</width>
+      <height>561</height>
+>>>>>>> 389d2f9 (first commit)
      </rect>
     </property>
     <property name="styleSheet">
@@ -41,6 +53,7 @@
      <enum>QFrame::Shape::StyledPanel</enum>
     </property>
    </widget>
+<<<<<<< HEAD
    <widget class="QFrame" name="Elapsed_Frame">
     <property name="geometry">
      <rect>
@@ -48,6 +61,15 @@
       <y>601</y>
       <width>101</width>
       <height>51</height>
+=======
+   <widget class="QFrame" name="ControlFrame">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>590</y>
+      <width>571</width>
+      <height>120</height>
+>>>>>>> 389d2f9 (first commit)
      </rect>
     </property>
     <property name="styleSheet">
@@ -63,6 +85,7 @@
     <property name="frameShape">
      <enum>QFrame::Shape::StyledPanel</enum>
     </property>
+<<<<<<< HEAD
     <widget class="QLineEdit" name="Elapsed_Time">
      <property name="geometry">
       <rect>
@@ -87,10 +110,295 @@
       <y>541</y>
       <width>101</width>
       <height>51</height>
+=======
+    <widget class="QLabel" name="label_freq">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>20</y>
+       <width>50</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>8</pointsize>
+      </font>
+     </property>
+     <property name="text">
+      <string>Freq :</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignmentFlag::AlignCenter</set>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="lineEdit_freq">
+     <property name="geometry">
+      <rect>
+       <x>70</x>
+       <y>20</y>
+       <width>100</width>
+       <height>30</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>-1</pointsize>
+      </font>
+     </property>
+     <property name="styleSheet">
+      <string>
+        QLineEdit {
+          border: 1px solid #ccc;
+          border-radius: 5px;
+          padding: 5px;
+          font-size: 14px;
+        }
+      </string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_khz">
+     <property name="geometry">
+      <rect>
+       <x>170</x>
+       <y>20</y>
+       <width>41</width>
+       <height>30</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>8</pointsize>
+      </font>
+     </property>
+     <property name="text">
+      <string>KHz</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignVCenter</set>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_ref">
+     <property name="geometry">
+      <rect>
+       <x>240</x>
+       <y>20</y>
+       <width>50</width>
+       <height>30</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>8</pointsize>
+      </font>
+     </property>
+     <property name="text">
+      <string>Ref :</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_kohm">
+     <property name="geometry">
+      <rect>
+       <x>390</x>
+       <y>20</y>
+       <width>51</width>
+       <height>30</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>8</pointsize>
+      </font>
+     </property>
+     <property name="text">
+      <string>kOhm</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_duration">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>70</y>
+       <width>70</width>
+       <height>30</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>8</pointsize>
+      </font>
+     </property>
+     <property name="text">
+      <string>Duration :</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_min">
+     <property name="geometry">
+      <rect>
+       <x>180</x>
+       <y>70</y>
+       <width>41</width>
+       <height>30</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>8</pointsize>
+      </font>
+     </property>
+     <property name="text">
+      <string>min</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_filename">
+     <property name="geometry">
+      <rect>
+       <x>240</x>
+       <y>70</y>
+       <width>70</width>
+       <height>30</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>8</pointsize>
+      </font>
+     </property>
+     <property name="text">
+      <string>Filename :</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_csv">
+     <property name="geometry">
+      <rect>
+       <x>470</x>
+       <y>70</y>
+       <width>40</width>
+       <height>30</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>8</pointsize>
+      </font>
+     </property>
+     <property name="text">
+      <string>.csv</string>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="lineEdit_freq_2">
+     <property name="geometry">
+      <rect>
+       <x>290</x>
+       <y>20</y>
+       <width>100</width>
+       <height>30</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>-1</pointsize>
+      </font>
+     </property>
+     <property name="styleSheet">
+      <string>
+        QLineEdit {
+          border: 1px solid #ccc;
+          border-radius: 5px;
+          padding: 5px;
+          font-size: 14px;
+        }
+      </string>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="lineEdit_freq_3">
+     <property name="geometry">
+      <rect>
+       <x>90</x>
+       <y>70</y>
+       <width>91</width>
+       <height>30</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>-1</pointsize>
+      </font>
+     </property>
+     <property name="styleSheet">
+      <string>
+        QLineEdit {
+          border: 1px solid #ccc;
+          border-radius: 5px;
+          padding: 5px;
+          font-size: 14px;
+        }
+      </string>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="lineEdit_freq_4">
+     <property name="geometry">
+      <rect>
+       <x>310</x>
+       <y>70</y>
+       <width>161</width>
+       <height>30</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>-1</pointsize>
+      </font>
+     </property>
+     <property name="styleSheet">
+      <string>
+        QLineEdit {
+          border: 1px solid #ccc;
+          border-radius: 5px;
+          padding: 5px;
+          font-size: 14px;
+        }
+      </string>
+     </property>
+    </widget>
+   </widget>
+   <widget class="QFrame" name="ControlFrame_2">
+    <property name="geometry">
+     <rect>
+      <x>670</x>
+      <y>590</y>
+      <width>321</width>
+      <height>121</height>
+>>>>>>> 389d2f9 (first commit)
      </rect>
     </property>
     <property name="styleSheet">
      <string>
+<<<<<<< HEAD
+=======
+       QFrame {
+         background-color: white;
+         border: 1px solid #ddd;
+         border-radius: 10px;
+         padding: 10px;
+       }
+     </string>
+    </property>
+    <property name="frameShape">
+     <enum>QFrame::Shape::StyledPanel</enum>
+    </property>
+    <widget class="QPushButton" name="StartButton">
+     <property name="geometry">
+      <rect>
+       <x>90</x>
+       <y>20</y>
+       <width>141</width>
+       <height>41</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string>
+>>>>>>> 389d2f9 (first commit)
        QPushButton {
          background-color: #007BFF;
          color: white;
@@ -106,6 +414,7 @@
          background-color: #004494;
        }
      </string>
+<<<<<<< HEAD
     </property>
     <property name="text">
      <string>Start</string>
@@ -259,6 +568,72 @@
      </property>
      <property name="text">
       <string/>
+=======
+     </property>
+     <property name="text">
+      <string>Start</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_ref_2">
+     <property name="geometry">
+      <rect>
+       <x>19</x>
+       <y>80</y>
+       <width>81</width>
+       <height>30</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>8</pointsize>
+      </font>
+     </property>
+     <property name="text">
+      <string>Elapsed Time:</string>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="lineEdit_freq_5">
+     <property name="geometry">
+      <rect>
+       <x>100</x>
+       <y>80</y>
+       <width>141</width>
+       <height>30</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>-1</pointsize>
+      </font>
+     </property>
+     <property name="styleSheet">
+      <string>
+        QLineEdit {
+          border: 1px solid #ccc;
+          border-radius: 5px;
+          padding: 5px;
+          font-size: 14px;
+        }
+      </string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_kohm_2">
+     <property name="geometry">
+      <rect>
+       <x>240</x>
+       <y>80</y>
+       <width>51</width>
+       <height>30</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>8</pointsize>
+      </font>
+     </property>
+     <property name="text">
+      <string>sec</string>
+>>>>>>> 389d2f9 (first commit)
      </property>
     </widget>
    </widget>
