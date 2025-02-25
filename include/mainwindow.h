@@ -13,25 +13,26 @@ QT_END_NAMESPACE
 
 class MainWindow : public QMainWindow
 {
-  Q_OBJECT
+    Q_OBJECT
 
 public:
-  MainWindow(QWidget* parent = nullptr);
-  ~MainWindow();
+    MainWindow(QWidget* parent = nullptr);
+    ~MainWindow();
 
 private slots:
-  void updateGraph(); //그래프 갱신 함수
+    void startGraphUpdate(); // start 버튼 클릭 시 그래프 업데이트
+    void updateGraph(); //그래프 갱신 함수
 
 private:
-  Ui::MainWindow* ui;
-  QCustomPlot *customPlot; //그래프 위젯
-  QTimer *timer;  // 타이머 (주기적으로 데이터를 가져옴)
+    Ui::MainWindow* ui;
+    QCustomPlot *customPlot; //그래프 위젯
+    QTimer *timer;  // 타이머 (주기적으로 데이터를 가져옴)
 
-  HDWF hdwf;  // Analog Discovery 2 핸들
-  QVector<double> dataX, dataY;  // 그래프 데이터 저장용
-  int sampleCount = 1024;  // 샘플 개수
+    HDWF hdwf;  // Analog Discovery 2 핸들
+    QVector<double> dataX, dataY;  // 그래프 데이터 저장용
+    int sampleCount = 1024;  // 샘플 개수
 
-  void initAnalogDiscovery();  // AD2 초기화 함수
-  QVector<double> getScopeData();  // AD2에서 데이터 가져오기
+    void initAnalogDiscovery();  // AD2 초기화 함수
+    QVector<double> getScopeData();  // AD2에서 데이터 가져오기
 };
 #endif  // MAINWINDOW_H
