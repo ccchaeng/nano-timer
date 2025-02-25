@@ -25,14 +25,16 @@ private slots:
 
 private:
     Ui::MainWindow* ui;
-    QCustomPlot *customPlot; //그래프 위젯
+    QCustomPlot *customPlotSignal;      // Signal 그래프용 QCustomPlot
+    QCustomPlot *customPlotImpedance;   // Impedance 그래프용 QCustomPlot
     QTimer *timer;  // 타이머 (주기적으로 데이터를 가져옴)
 
     HDWF hdwf;  // Analog Discovery 2 핸들
     QVector<double> dataX, dataY;  // 그래프 데이터 저장용
+    QVector<double> calculateImpedance(const QVector<double>& vRef, const QVector<double>& vUnknown, double refResistance);
     int sampleCount = 1024;  // 샘플 개수
 
     void initAnalogDiscovery();  // AD2 초기화 함수
-    QVector<double> getScopeData();  // AD2에서 데이터 가져오기
+    QVector<double> getScopeData(int channel);  // AD2에서 데이터 가져오기
 };
 #endif  // MAINWINDOW_H

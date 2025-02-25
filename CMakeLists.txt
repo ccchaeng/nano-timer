@@ -59,6 +59,8 @@ add_executable(${PROJECT_NAME}
     ${MOC_SOURCES}
     ${UIC_SOURCES}
     ${RESOURCE_SOURCES}
+    include/mainwindow.h include/qcustomplot.h
+    include/mainwindow.h include/qcustomplot.h
 )
 
 # Qt6 및 WaveForms SDK 라이브러리 연결
