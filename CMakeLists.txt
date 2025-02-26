@@ -30,12 +30,14 @@ set(SOURCES
     src/main.cpp
     src/mainwindow.cpp
     src/qcustomplot.cpp
+    src/fitSine.cpp
 )
 
 # 헤더 파일
 set(HEADERS
     include/mainwindow.h
     include/qcustomplot.h
+    include/fitSine.h
 )
 
 # UI 파일
@@ -59,6 +61,7 @@ add_executable(${PROJECT_NAME}
     ${MOC_SOURCES}
     ${UIC_SOURCES}
     ${RESOURCE_SOURCES}
+    include/fitSine.h
 )
 
 # Qt6 및 WaveForms SDK 라이브러리 연결
@@ -72,3 +75,6 @@ target_link_libraries(${PROJECT_NAME}
 if(WIN32)
     message(STATUS "Windows 64bit 플랫폼 설정 완료")
 endif()
+
+include_directories(${CMAKE_SOURCE_DIR}/include)  # fitSine.h 포함
+include_directories(${CMAKE_SOURCE_DIR}/include/Eigen)  # Eigen 포함

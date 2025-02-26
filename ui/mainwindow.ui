@@ -19,13 +19,13 @@
       QWidget { background-color: #f0f0f0; }
     </string>
    </property>
-   <widget class="QFrame" name="GraphFrame">
+   <widget class="QFrame" name="GraphFrame_1">
     <property name="geometry">
      <rect>
       <x>10</x>
       <y>20</y>
       <width>911</width>
-      <height>651</height>
+      <height>321</height>
      </rect>
     </property>
     <property name="styleSheet">
@@ -45,7 +45,7 @@
     <property name="geometry">
      <rect>
       <x>934</x>
-      <y>601</y>
+      <y>630</y>
       <width>101</width>
       <height>51</height>
      </rect>
@@ -84,7 +84,7 @@
     <property name="geometry">
      <rect>
       <x>934</x>
-      <y>541</y>
+      <y>570</y>
       <width>101</width>
       <height>51</height>
      </rect>
@@ -117,7 +117,7 @@
       <x>930</x>
       <y>20</y>
       <width>111</width>
-      <height>491</height>
+      <height>531</height>
      </rect>
     </property>
     <property name="styleSheet">
@@ -137,7 +137,7 @@
      <property name="geometry">
       <rect>
        <x>9</x>
-       <y>70</y>
+       <y>90</y>
        <width>91</width>
        <height>20</height>
       </rect>
@@ -156,7 +156,7 @@
      <property name="geometry">
       <rect>
        <x>9</x>
-       <y>100</y>
+       <y>120</y>
        <width>91</width>
        <height>20</height>
       </rect>
@@ -169,7 +169,7 @@
      <property name="geometry">
       <rect>
        <x>10</x>
-       <y>170</y>
+       <y>190</y>
        <width>91</width>
        <height>20</height>
       </rect>
@@ -188,7 +188,7 @@
      <property name="geometry">
       <rect>
        <x>10</x>
-       <y>200</y>
+       <y>220</y>
        <width>91</width>
        <height>20</height>
       </rect>
@@ -201,7 +201,7 @@
      <property name="geometry">
       <rect>
        <x>10</x>
-       <y>270</y>
+       <y>290</y>
        <width>91</width>
        <height>20</height>
       </rect>
@@ -220,7 +220,7 @@
      <property name="geometry">
       <rect>
        <x>10</x>
-       <y>300</y>
+       <y>320</y>
        <width>91</width>
        <height>20</height>
       </rect>
@@ -233,7 +233,7 @@
      <property name="geometry">
       <rect>
        <x>10</x>
-       <y>370</y>
+       <y>390</y>
        <width>91</width>
        <height>20</height>
       </rect>
@@ -252,7 +252,7 @@
      <property name="geometry">
       <rect>
        <x>10</x>
-       <y>400</y>
+       <y>420</y>
        <width>91</width>
        <height>20</height>
       </rect>
@@ -261,6 +261,28 @@
       <string/>
      </property>
     </widget>
+   </widget>
+   <widget class="QFrame" name="GraphFrame_2">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>360</y>
+      <width>911</width>
+      <height>321</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string>
+       QFrame {
+         background-color: white;
+         border: 1px solid #ccc;
+         border-radius: 10px;
+       }
+     </string>
+    </property>
+    <property name="frameShape">
+     <enum>QFrame::Shape::StyledPanel</enum>
+    </property>
    </widget>
   </widget>
  </widget>
