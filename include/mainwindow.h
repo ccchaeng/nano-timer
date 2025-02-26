@@ -14,7 +14,7 @@ QT_END_NAMESPACE
 
 class MainWindow : public QMainWindow
 {
-  Q_OBJECT
+    Q_OBJECT
 
 public:
   explicit MainWindow(QWidget* parent = nullptr);
@@ -47,7 +47,6 @@ private:
   void initAnalogDiscovery();  // AD2 초기화 함수
   QVector<double> getScopeData(int channel);  // 채널의 데이터 읽기
   double calcImpedance(QVector<double> ch1, QVector<double> ch2);
-
 
 };
 #endif  // MAINWINDOW_H
