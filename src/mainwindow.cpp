@@ -109,9 +109,8 @@ QVector<double> MainWindow::getScopeData(int channel)
     return data;
 }
 
-// **임피던스 계산 함수**
-double MainWindow::calcImpedance(QVector<double> ch1, QVector<double> ch2)
-{
+// **임피던스 계산 함수 (수정 버전)**
+double MainWindow::calcImpedance(QVector<double> ch1, QVector<double> ch2) {
     double sumCh1 = 0, sumCh2 = 0;
     for (int i = 0; i < ch1.size(); i++) {
         sumCh1 += ch1[i] * ch1[i];
@@ -121,37 +120,40 @@ double MainWindow::calcImpedance(QVector<double> ch1, QVector<double> ch2)
     double rmsCh1 = sqrt(sumCh1 / ch1.size());
     double rmsCh2 = sqrt(sumCh2 / ch2.size());
 
-    return (rmsCh2 / rmsCh1) * 1000.0; // 예제 공식 (조절 가능)
+    double refResistance = ui->input_Ref->text().toDouble() * 1000.0; // kOhm → Ohm 변환
+    if (rmsCh1 < 1e-6) rmsCh1 = 1e-6;  // 0 분모 방지
+
+    return (rmsCh2 / rmsCh1) * refResistance;
 }
 
-// **그래프 갱신 함수**
-void MainWindow::updateGraph()
-{
-    QVector<double> ch1Data = getScopeData(0);
-    QVector<double> ch2Data = getScopeData(1);
+
+// **그래프 갱신 함수 (수정 버전)**
+void MainWindow::updateGraph() {
+    QVector<double> ch1Data = getScopeData(0);  // 참조 채널
+    QVector<double> ch2Data = getScopeData(1);  // 측정 채널
 
     if (ch1Data.isEmpty() || ch2Data.isEmpty()) return;
 
     QVector<double> time(sampleCount);
     for (int i = 0; i < sampleCount; ++i) {
-        time[i] = i;
+        time[i] = elapsedTime + (i * 0.001);
     }
 
-    // **Signal plot 업데이트**
+    // **Signal 그래프 업데이트**
     Signal_Plot->graph(0)->setData(time, ch1Data);
     Signal_Plot->graph(1)->setData(time, ch2Data);
-    Signal_Plot->xAxis->setRange(0, sampleCount);
+    Signal_Plot->xAxis->setRange(time.first(), time.last());
     Signal_Plot->yAxis->setRange(-0.5, 0.5);
     Signal_Plot->replot();
 
-    // **Impedance plot 업데이트**
+    // **Impedance 그래프 업데이트**
     double impedance = calcImpedance(ch1Data, ch2Data);
     impedanceValues.append(impedance);
-    timeValues.append(elapsedTime);
+    timeValues.append(time.last());
 
     Impedance_Plot->graph(0)->setData(timeValues, impedanceValues);
-    Impedance_Plot->xAxis->setRange(0, elapsedTime);
-    Impedance_Plot->yAxis->setRange(0, 150);
+    Impedance_Plot->xAxis->setRange(timeValues.first(), timeValues.last());
+    Impedance_Plot->yAxis->rescale();  // y축 자동 스케일링
     Impedance_Plot->replot();
 
     // **Elapsed Time UI 업데이트**
