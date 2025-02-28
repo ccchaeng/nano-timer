@@ -125,8 +125,6 @@ std::complex<double> MainWindow::calcImpedance(QVector<double> ch1, QVector<doub
     auto [R0, T0, M0] = sineFit2Cycle(ch1Vec, 2);
     auto [R1, T1, M1] = sineFit2Cycle(ch2Vec, 2);
 
-
-
     // 진폭 값이 너무 작으면 보정
     if (R0 < 1e-3) R0 = 1e-3;
     if (R1 < 1e-3) R1 = 1e-3;
