@@ -2,6 +2,8 @@
 #include "mainwindow.h"
 #include <complex>
 #include "fitSine.h"
+#include <QDir>
+#include <QCoreApplication>
 
 MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent), ui(new Ui::MainWindow)
 {
@@ -125,8 +127,6 @@ std::complex<double> MainWindow::calcImpedance(QVector<double> ch1, QVector<doub
     auto [R0, T0, M0] = sineFit2Cycle(ch1Vec, 2);
     auto [R1, T1, M1] = sineFit2Cycle(ch2Vec, 2);
 
-
-
     // 진폭 값이 너무 작으면 보정
     if (R0 < 1e-3) R0 = 1e-3;
     if (R1 < 1e-3) R1 = 1e-3;
@@ -193,6 +193,13 @@ void MainWindow::updateGraph() {
 
     elapsedTime += 0.1;
     ui->Elapsed_Time->setText(QString::number(elapsedTime, 'f', 1));
+
+    // CSV 파일에 데이터 저장 (data 폴더 내부)
+    // 100ms 단위로 데이터 저장
+    if (static_cast<int>(elapsedTime * 10) % 1 == 0) {  // 100ms마다 저장
+        csvStream << elapsedTime << "," << impedance.real() << "," << impedance.imag() << "," << std::abs(impedance) << "\n";
+    }
+
 }
 
 // **Start/Stop 버튼 동작**
@@ -211,15 +218,34 @@ void MainWindow::startMeasurement()
     elapsedTime = 0.0;
     totalDuration = ui->input_Duration->text().toInt();
 
-    QString filename = ui->input_Filename->text() + ".csv";
+    QString saveDir = QCoreApplication::applicationDirPath() + "/../../data/";
+    QDir().mkpath(saveDir);  // ✅ 디렉터리 없으면 생성
+
+    QString filename = saveDir + "/" + ui->input_Filename->text() + ".csv";
     csvFile.setFileName(filename);
 
+    qDebug() << "CSV 파일 저장 경로: " << csvFile.fileName();
+
     if (!csvFile.open(QIODevice::WriteOnly | QIODevice::Text)) {
-        qDebug() << "CSV 파일 열기 실패!";
+        qDebug() << "CSV 파일 저장 실패! 파일 경로:" << filename;
         return;
     }
+
     csvStream.setDevice(&csvFile);
-    csvStream << "Time,Signal,Impedance\n";
+    csvStream << "Time,real,imag,abs\n";
+
+     qDebug() << "✅ CSV 파일 저장 성공! 파일 경로:" << filename;
+
+    // ✅ **그래프 데이터 초기화**
+    impedanceValues.clear();
+    timeValues.clear();
+    Signal_Plot->graph(0)->data()->clear();
+    Signal_Plot->graph(1)->data()->clear();
+    Impedance_Plot->graph(0)->data()->clear();
+
+    // ✅ **그래프 강제 초기화**
+    Signal_Plot->replot();
+    Impedance_Plot->replot();
 
     timer->start(100);
     QTimer::singleShot(totalDuration * 1000, this, &MainWindow::stopMeasurement);
@@ -233,8 +259,13 @@ void MainWindow::startMeasurement()
 void MainWindow::stopMeasurement()
 {
     timer->stop();
-    csvFile.close();
-    qDebug() << "측정 종료!";
+
+    // csv 파일 닫기
+    if (csvFile.isOpen()) {
+        csvFile.close();
+        qDebug() << "CSV 저장 완료! 파일 위치: " << csvFile.fileName();
+    }
+
 
     // **버튼 색상 및 텍스트 복원**
     ui->StartButton->setText("Start");
