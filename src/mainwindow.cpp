@@ -221,6 +221,17 @@ void MainWindow::startMeasurement()
     csvStream.setDevice(&csvFile);
     csvStream << "Time,Signal,Impedance\n";
 
+    // ✅ **그래프 데이터 초기화**
+    impedanceValues.clear();
+    timeValues.clear();
+    Signal_Plot->graph(0)->data()->clear();
+    Signal_Plot->graph(1)->data()->clear();
+    Impedance_Plot->graph(0)->data()->clear();
+
+    // ✅ **그래프 강제 초기화**
+    Signal_Plot->replot();
+    Impedance_Plot->replot();
+
     timer->start(100);
     QTimer::singleShot(totalDuration * 1000, this, &MainWindow::stopMeasurement);
 
