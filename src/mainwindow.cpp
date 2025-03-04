@@ -1,5 +1,7 @@
 #include "./ui_mainwindow.h"
 #include "mainwindow.h"
+#include <complex>
+#include "fitSine.h"
 
 MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent), ui(new Ui::MainWindow)
 {
@@ -110,53 +112,85 @@ QVector<double> MainWindow::getScopeData(int channel)
 }
 
 // **임피던스 계산 함수 (수정 버전)**
-double MainWindow::calcImpedance(QVector<double> ch1, QVector<double> ch2) {
-    double sumCh1 = 0, sumCh2 = 0;
-    for (int i = 0; i < ch1.size(); i++) {
-        sumCh1 += ch1[i] * ch1[i];
-        sumCh2 += ch2[i] * ch2[i];
+std::complex<double> MainWindow::calcImpedance(QVector<double> ch1, QVector<double> ch2, double refResistance) {
+    if (ch1.isEmpty() || ch2.isEmpty()) {
+        qDebug() << "채널 데이터가 비어 있습니다!";
+        return std::complex<double>(0.0, 0.0);
     }
 
-    double rmsCh1 = sqrt(sumCh1 / ch1.size());
-    double rmsCh2 = sqrt(sumCh2 / ch2.size());
+    // sineFit2Cycle() 적용
+    std::vector<double> ch1Vec(ch1.begin(), ch1.end());
+    std::vector<double> ch2Vec(ch2.begin(), ch2.end());
 
-    double refResistance = ui->input_Ref->text().toDouble() * 1000.0; // kOhm → Ohm 변환
-    if (rmsCh1 < 1e-6) rmsCh1 = 1e-6;  // 0 분모 방지
+    auto [R0, T0, M0] = sineFit2Cycle(ch1Vec, 2);
+    auto [R1, T1, M1] = sineFit2Cycle(ch2Vec, 2);
 
-    return (rmsCh2 / rmsCh1) * refResistance;
+
+
+    // 진폭 값이 너무 작으면 보정
+    if (R0 < 1e-3) R0 = 1e-3;
+    if (R1 < 1e-3) R1 = 1e-3;
+
+    double g = fabs(R1 / R0); // 음수 방지
+    double p = T1 - T0;
+
+    // 위상 차이 보정 (-π ~ π 범위로 맞춤)
+    if (p > M_PI) {
+        p -= 2 * M_PI;
+    } else if (p < -M_PI) {
+        p += 2 * M_PI;
+    }
+
+    // 임피던스 계산
+    std::complex<double> impedance = std::polar(g * refResistance, p);
+
+    qDebug() << "계산된 임피던스 값: " << impedance.real() << " + j " << impedance.imag();
+
+    return impedance;
 }
 
 
-// **그래프 갱신 함수 (수정 버전)**
-void MainWindow::updateGraph() {
-    QVector<double> ch1Data = getScopeData(0);  // 참조 채널
-    QVector<double> ch2Data = getScopeData(1);  // 측정 채널
 
-    if (ch1Data.isEmpty() || ch2Data.isEmpty()) return;
+
+void MainWindow::updateGraph() {
+    QVector<double> ch1Data = getScopeData(0);
+    QVector<double> ch2Data = getScopeData(1);
+
+    if (ch1Data.isEmpty() || ch2Data.isEmpty()) {
+        qDebug() << "데이터 없음! 임피던스 계산 스킵";
+        return;
+    }
 
     QVector<double> time(sampleCount);
     for (int i = 0; i < sampleCount; ++i) {
         time[i] = elapsedTime + (i * 0.001);
     }
 
-    // **Signal 그래프 업데이트**
+    double refResistance = ui->input_Ref->text().toDouble();
+    if (refResistance > 10) {
+        refResistance /= 1000.0;
+    }
+
+    std::complex<double> impedance = calcImpedance(ch1Data, ch2Data, refResistance);
+    qDebug() << "계산된 임피던스 값: " << impedance.real() << " + j" << impedance.imag();
+
+    // ✅ Signal 그래프 업데이트
     Signal_Plot->graph(0)->setData(time, ch1Data);
     Signal_Plot->graph(1)->setData(time, ch2Data);
     Signal_Plot->xAxis->setRange(time.first(), time.last());
     Signal_Plot->yAxis->setRange(-0.5, 0.5);
     Signal_Plot->replot();
 
-    // **Impedance 그래프 업데이트**
-    double impedance = calcImpedance(ch1Data, ch2Data);
-    impedanceValues.append(impedance);
+    // ✅ Impedance 그래프 업데이트
+    impedanceValues.append(impedance.real());
     timeValues.append(time.last());
 
     Impedance_Plot->graph(0)->setData(timeValues, impedanceValues);
     Impedance_Plot->xAxis->setRange(timeValues.first(), timeValues.last());
-    Impedance_Plot->yAxis->rescale();  // y축 자동 스케일링
+    Impedance_Plot->graph(0)->rescaleAxes();
+
     Impedance_Plot->replot();
 
-    // **Elapsed Time UI 업데이트**
     elapsedTime += 0.1;
     ui->Elapsed_Time->setText(QString::number(elapsedTime, 'f', 1));
 }
